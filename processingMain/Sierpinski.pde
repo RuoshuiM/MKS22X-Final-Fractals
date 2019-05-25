@@ -27,15 +27,6 @@ public class Sierpinski {
    - vertices
    */
 
-
-  public Sierpinski(color foreground, color background) {
-    fg = foreground;
-    bg = background;
-  }
-
-  public Sierpinski(int levels) {
-  }
-
   public Sierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
     this.levels = levels;
     v = new float[] {x1, y1, x2, y2, x3, y3};
@@ -52,18 +43,19 @@ public class Sierpinski {
 
       int next = levels - 1;
       if (next > 0) {
-        Sierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
-        Sierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
-        Sierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
+        makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
+        makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
+        makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
       }
-
     }
   }
 
   public void display() {
     triangle(v[0], v[1], v[2], v[3], v[4], v[5]);
-    for (Sierpinski i : inner) {
-      i.display();
+    if (inner != null) {
+      for (Sierpinski i : inner) {
+        i.display();
+      }
     }
   }
 
