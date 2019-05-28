@@ -43,9 +43,10 @@ public class Sierpinski {
 
       int next = levels - 1;
       if (next > 0) {
-        makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
-        makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
-        makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
+        inner = new Sierpinski[3];
+        inner[0] = makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
+        inner[1] = makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
+        inner[2] = makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
       }
     }
   }
@@ -53,16 +54,17 @@ public class Sierpinski {
   /** Set up necessary settings for displaying */
   public void display() {
     fill(fg);
+    strokeWeight(0.000001);
     innerDisplay();
   }
   
   private void innerDisplay() {
+    triangle(v[0], v[1], v[2], v[3], v[4], v[5]);
     if (inner != null) {
       for (Sierpinski i : inner) {
         i.innerDisplay();
       }
     }
-    triangle(v[0], v[1], v[2], v[3], v[4], v[5]);
   }
 
   //public void draw(float v1x, float v1y, float v2x, float v2y, float v3x, float v3y) {
