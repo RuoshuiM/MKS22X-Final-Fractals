@@ -18,10 +18,11 @@ void draw() {
   fill(255);
   text("Click the mouse to increase levels, press a key to decrease levles", 20, 20);
 
-
+  
   //gasket.display(0, height - 10, width, height - 10, width / 2, 10);
-  //gasket.display();
-  testRotation();
+  gasket = makeSierpinski(width, height, 9); //<>//
+  gasket.display();
+  //testRotation();
   //koch(levels,width-10, height/2,10, height/3 ); 
   //other fractal you can do! This requires a bit more math, or you can look up the coordinates.
 }
@@ -52,7 +53,7 @@ Sierpinski makeSierpinski(int maxWidth, int maxHeight, int defaultLevel) {
   // do computations to determine the starting vertices of triangles
   float midWidth = maxWidth / 2;
   float midHeight = maxHeight / 2;
-  float margin = midHeight - midHeight * 0.1;
+  float margin = midHeight * 0.2;
 
   x1 = midWidth;
   y1 = margin;
@@ -75,20 +76,23 @@ Sierpinski makeSierpinski(int maxWidth, int maxHeight, int defaultLevel) {
  Rotates (x, y) around (cx, cy) for angle degrees
  */
 float[] rotate(float x, float y, float cx, float cy, float angle) {
+  // See https://academo.org/demos/rotation-about-point/
   float rangle = radians(angle);
 
   // declare tmp values to work with so not messing with original arguments
-  float nx, ny;
+  float nx, ny, tmpx;
 
   // translate all pts so that cx cy are at origin
-  nx = x - cx;
+  nx = tmpx = x - cx;
   ny = y - cy;
   
   //ny = -ny;
-
+  
   // apply rotation
   nx = nx * cos(rangle) - ny * sin(rangle);
-  ny = ny * cos(rangle) + nx * sin(rangle);
+  
+  // Here nx is changed already, so use the tmp variable
+  ny = ny * cos(rangle) + tmpx * sin(rangle);
 
   // translate back
   //ny = -ny;
@@ -114,12 +118,12 @@ void testRotation() {
   x1 = midWidth;
   y1 = margin;
 
-  float[] rotatedCoors = rotate(x1, y1, midWidth, midHeight, 90);
+  float[] rotatedCoors = rotate(x1, y1, midWidth, midHeight, 120);
 
   x2 = rotatedCoors[0];
   y2 = rotatedCoors[1];
 
-  rotatedCoors = rotate(x1, y1, midWidth, midHeight, 90);
+  rotatedCoors = rotate(x2, y2, midWidth, midHeight, 120);
 
   x3 = rotatedCoors[0];
   y3 = rotatedCoors[1];
@@ -140,8 +144,11 @@ void testRotation() {
   text("center", midWidth, midHeight);
   
   
-  
-  for (int i = 0; i < 360; i++) {
-    
-  }
+  //for (int i = 0; i < 360; i+=10) {
+  //  float x, y;
+  //  rotatedCoors = rotate(x1, y1, midWidth, midHeight, i);
+  //  x = rotatedCoors[0];
+  //  y = rotatedCoors[1];
+  //  text(i, x, y);
+  //}
 }

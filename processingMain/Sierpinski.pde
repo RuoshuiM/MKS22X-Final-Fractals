@@ -49,14 +49,20 @@ public class Sierpinski {
       }
     }
   }
-
+  
+  /** Set up necessary settings for displaying */
   public void display() {
-    triangle(v[0], v[1], v[2], v[3], v[4], v[5]);
+    fill(fg);
+    innerDisplay();
+  }
+  
+  private void innerDisplay() {
     if (inner != null) {
       for (Sierpinski i : inner) {
-        i.display();
+        i.innerDisplay();
       }
     }
+    triangle(v[0], v[1], v[2], v[3], v[4], v[5]);
   }
 
   //public void draw(float v1x, float v1y, float v2x, float v2y, float v3x, float v3y) {
