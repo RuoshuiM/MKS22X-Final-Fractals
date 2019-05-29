@@ -4,7 +4,7 @@ import java.util.LinkedList;
 Sierpinski gasket;
 
 float zoomLevel;
-float zoomFactor;
+float zoomFactor = 1.5;
 
 void setup() {
   size(1000, 500);
@@ -36,12 +36,10 @@ void subKock() {
   // https://stackoverflow.com/a/15368026
 }
 
-public void mouseClicked(MouseEvent e) {
-  int b = e.getButton();
-  // left click == 37, right click == 39
-  if (b == 37) {
+public void mouseClicked() {
+  if (mouseButton == LEFT) {
     gasket.zoomIn(mouseX, mouseY, zoomFactor);
-  } else if (b == 39) {
+  } else if (mouseButton == RIGHT) {
     gasket.zoomOut(mouseX, mouseY, zoomFactor);
   }
 }
