@@ -111,6 +111,13 @@ public class Sierpinski {
     innerGasket(next, x3, y3, m13x, m13y, m23x, m23y);
   }
 
+  public void zoomIn(float x, float y, float factor) {
+    System.out.format("Zooming in at (%f, %f) with factor %f%n", x, y, factor);
+  }
+  
+  public void zoomOut(float x, float y, float factor) {
+    System.out.format("Zooming out at (%f, %f) with factor %f%n", x, y, factor);
+  }
 
   private float ave(float x, float y) {
     return (x + y) / 2;
@@ -123,7 +130,7 @@ public class Sierpinski {
   public void addLevel() {
     levels++;
   }
-
+  
   public void minusLevel() {
     levels--;
   }
