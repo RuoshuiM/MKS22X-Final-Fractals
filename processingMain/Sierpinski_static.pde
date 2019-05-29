@@ -1,10 +1,23 @@
+int Sierpinski_level = 8;
+
+/**
+  Track status of zooming of the gasket
+  */
+class SierpinskiZoom {
+  /** class is non-instantiable */
+  private SierpinskiZoom() { }
+  
+  boolean shouldMakeDetail = false;
+  boolean shouldReduceDetail = false;
+  
+  
+}
 
 Sierpinski makeSierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
   return new Sierpinski(levels, x1, y1, x2, y2, x3, y3);
 }
 
-
-Sierpinski makeSierpinski(int maxWidth, int maxHeight, int defaultLevel) {
+Sierpinski makeSierpinski(int maxWidth, int maxHeight, int level) {
   float x1, y1, x2, y2, x3, y3;
   // do computations to determine the starting vertices of triangles
   float midWidth = maxWidth / 2;
@@ -24,7 +37,7 @@ Sierpinski makeSierpinski(int maxWidth, int maxHeight, int defaultLevel) {
   x3 = rotatedCoors[0];
   y3 = rotatedCoors[1];
   
-  return new Sierpinski(defaultLevel, x1, y1, x2, y2, x3, y3);
+  return new Sierpinski(level, x1, y1, x2, y2, x3, y3);
 }
 
 /**

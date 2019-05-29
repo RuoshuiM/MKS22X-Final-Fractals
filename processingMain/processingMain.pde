@@ -12,7 +12,7 @@ void setup() {
   //gasket = makeSierpinski(width, height, 9);
   surface.setResizable(true);
 
-  gasket = makeSierpinski(width, height, 8);
+  gasket = makeSierpinski(width, height, 0);
   //noLoop();
 }
 

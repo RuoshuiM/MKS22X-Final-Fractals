@@ -1,12 +1,12 @@
 public class Sierpinski {
 
   /** how many levels of sub-gaskets should this one make */
-  int levels;
+  int level;
 
   /** color of triangle and background */
   int bg, fg;
   
-  Sierpinski parent;
+  //Sierpinski parent;
 
   {
     bg = color(255, 255, 255);
@@ -28,12 +28,12 @@ public class Sierpinski {
    - vertices
    */
 
-  public Sierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
-    this.levels = levels;
+  public Sierpinski(int level, float x1, float y1, float x2, float y2, float x3, float y3) {
+    this.level = level;
+    
     vx = new float[] {x1, x2, x3};
     vy = new float[] {y1, y2, y3};
-    if (levels > 0) {
-      
+    if (level < Sierpinski_level) {
       
       float m12x = ave(x1, x2);
       float m12y = ave(y1, y2);
@@ -45,17 +45,17 @@ public class Sierpinski {
 
       triangle(m12x, m12y, m13x, m13y, m23x, m23y);
 
-      int next = levels - 1;
-      if (next > 0) {
+      int next = level + 1;
+      if (next < Sierpinski_level) {
         inner = new Sierpinski[3];
         inner[0] = makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
         inner[1] = makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
         inner[2] = makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
         
         
-        inner[0].setParent(this);
-        inner[1].setParent(this);
-        inner[2].setParent(this);
+        //inner[0].setParent(this);
+        //inner[1].setParent(this);
+        //inner[2].setParent(this);
       }
     }
   }
@@ -148,23 +148,23 @@ public class Sierpinski {
     }
   }
   
-  public void setParent(Sierpinski s) {
-    this.parent = s;
-  }
+  //public void setParent(Sierpinski s) {
+  //  this.parent = s;
+  //}
 
   private float ave(float x, float y) {
     return (x + y) / 2;
   }
 
   public void setLevel(int l) {
-    levels = l;
+    level = l;
   }
 
   public void addLevel() {
-    levels++;
+    level++;
   }
   
   public void minusLevel() {
-    levels--;
+    level--;
   }
 }
