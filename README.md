@@ -1,7 +1,7 @@
 # MKS22X-Final-Fractals
 
 ## 20190524
-Try to draw the first triangle using rotation of point around center.
+- Try to draw the first triangle using rotation of point around center.
 
 ## 20190528
 ### Morning
@@ -17,3 +17,8 @@ Try to draw the first triangle using rotation of point around center.
 
 ### Class
 - Basic zooming, not creating more fractals based on zooming level and position yet.
+
+## 20190530
+### Morning
+- Sets up conditional display. Didn't fix error when all vertices are outside view.
+- Adds more structure to zooming.
