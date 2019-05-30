@@ -1,6 +1,11 @@
 import java.util.List;
 import java.util.LinkedList;
 
+/* TODO:
+ *  - implement conditions for adding details
+ *  - fix error in display, when all coors are outside view but on different sides
+ */
+
 Sierpinski gasket;
 
 float zoomLevel;
@@ -18,7 +23,7 @@ void setup() {
 
 void draw() { 
   background(50);  
-  fill(255);
+  fill(255); //<>//
   //text("Click the mouse to increase levels, press a key to decrease levles", 20, 20);
 
   

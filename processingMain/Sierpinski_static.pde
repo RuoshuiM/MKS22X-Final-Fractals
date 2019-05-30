@@ -1,16 +1,34 @@
 int Sierpinski_level = 8;
 
+color Sierpinski_fg = color(255, 255, 255);
+color Sierpinski_bg = color(255, 0, 0);
+
 /**
-  Track status of zooming of the gasket
+  * Track status of zooming of the gasket
   */
-class SierpinskiZoom {
+static class SierpinskiZoom {
   /** class is non-instantiable */
   private SierpinskiZoom() { }
   
-  boolean shouldMakeDetail = false;
-  boolean shouldReduceDetail = false;
+  /** Tracks whether recalculate should level make detail */
+  boolean computed = false;
   
+  int curLevel = 0;
+  boolean shouldLevelMakeDetail = false;
   
+  boolean hasZoomedIn = false;
+  
+  /**
+    * Used when zooming in
+    * @return Whether fractal on this level should make more details
+    */
+  boolean shouldMakeDetail(Sierpinski s, int level) {
+    return false;
+  }
+  
+  boolean shouldReduceDetail(Sierpinski s, int level) {
+    return false;
+  }
 }
 
 Sierpinski makeSierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
