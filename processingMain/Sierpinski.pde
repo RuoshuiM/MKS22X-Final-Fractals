@@ -3,7 +3,7 @@ public class Sierpinski {
   /** how many levels of sub-gaskets should this one make */
   int level;
 
-// Following code moved to static
+  // Following code moved to static
   ///** color of triangle and background */
   //int bg, fg;
   //{
@@ -12,7 +12,7 @@ public class Sierpinski {
   //}
 
   //Sierpinski parent;
-  
+
   /** 
    * vertices of this gasket 
    */
@@ -64,7 +64,7 @@ public class Sierpinski {
   public void display() {
     fill(Sierpinski_fg);
     strokeWeight(0.000001);
-    condDisplay();
+    innerDisplay();
   }
 
   /**
@@ -96,7 +96,7 @@ public class Sierpinski {
         // no vertices are inside view, don't display. 
         // a mistake: if gaskets are on opposite side of view, still do conditional display
         // for sub gaskets. If they are all outside view on same side, don't display at all
-        
+
         // This will prevent taking time to display extra gaskets outside view.
       }
     }
@@ -177,6 +177,11 @@ public class Sierpinski {
       for (Sierpinski s : inner) {
         s.zoomIn(x, y, factor);
       }
+    } else {
+      // no inner gaskets; create some if necessary
+      if (abs(vx[1] - vx[2]) > 1) {
+        inner = makeChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+      }
     }
   }
 
@@ -197,10 +202,6 @@ public class Sierpinski {
   //public void setParent(Sierpinski s) {
   //  this.parent = s;
   //}
-
-  private float ave(float x, float y) {
-    return (x + y) / 2;
-  }
 
   public void setLevel(int l) {
     level = l;

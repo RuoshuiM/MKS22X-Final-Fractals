@@ -4,37 +4,40 @@ color Sierpinski_fg = color(255, 255, 255);
 color Sierpinski_bg = color(255, 0, 0);
 
 /**
-  * Track status of zooming of the gasket
-  */
+ * Track status of zooming of the gasket
+ */
 static class SierpinskiZoom {
   /** class is non-instantiable */
-  private SierpinskiZoom() { }
-  
+  private SierpinskiZoom() {
+  }
+
   /** Tracks whether recalculate should level make detail */
   boolean computed = false;
-  
+
   int curLevel = 0;
   boolean shouldLevelMakeDetail = false;
-  
+
   boolean hasZoomedIn = false;
-  
+
   /**
-    * Used when zooming in
-    * @return Whether fractal on this level should make more details
-    */
+   * Used when zooming in
+   * @return Whether fractal on this level should make more details
+   */
   boolean shouldMakeDetail(Sierpinski s, int level) {
     return false;
   }
-  
+
   boolean shouldReduceDetail(Sierpinski s, int level) {
     return false;
   }
 }
 
+/** Wrapper for Sierpinski class so that constructor doesn't directly call itself */
 Sierpinski makeSierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
   return new Sierpinski(levels, x1, y1, x2, y2, x3, y3);
 }
 
+/** Initializes the first gasket, which is the fractal itself */
 Sierpinski makeSierpinski(int maxWidth, int maxHeight, int level) {
   float x1, y1, x2, y2, x3, y3;
   // do computations to determine the starting vertices of triangles
@@ -54,38 +57,27 @@ Sierpinski makeSierpinski(int maxWidth, int maxHeight, int level) {
 
   x3 = rotatedCoors[0];
   y3 = rotatedCoors[1];
-  
+
   return new Sierpinski(level, x1, y1, x2, y2, x3, y3);
 }
 
-/**
- Helper function to determing rotation of a point about another point, given a specific angle
- Rotates (x, y) around (cx, cy) for angle degrees
+/** 
+ * Make three more gaskets for the given coordinates of the parent
  */
-float[] rotate(float x, float y, float cx, float cy, float angle) {
-  // See https://academo.org/demos/rotation-about-point/
-  float rangle = radians(angle);
-
-  // declare tmp values to work with so not messing with original arguments
-  float nx, ny, tmpx;
-
-  // translate all pts so that cx cy are at origin
-  nx = tmpx = x - cx;
-  ny = y - cy;
+Sierpinski[] makeChildren(int level, float x1, float y1, float x2, float y2, float x3, float y3) {
+  Sierpinski[] inner = new Sierpinski[3];
   
-  //ny = -ny;
-  
-  // apply rotation
-  nx = nx * cos(rangle) - ny * sin(rangle);
-  
-  // Here nx is changed already, so use the tmp variable
-  ny = ny * cos(rangle) + tmpx * sin(rangle);
+  float m12x = ave(x1, x2);
+  float m12y = ave(y1, y2);
+  float m13x = ave(x1, x3);
+  float m13y = ave(y1, y3);
+  float m23x = ave(x2, x3);
+  float m23y = ave(y2, y3);
 
-  // translate back
-  //ny = -ny;
+  int next = level + 1;
+  inner[0] = makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
+  inner[1] = makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
+  inner[2] = makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
   
-  nx += cx;
-  ny += cy;
-
-  return new float[] {nx, ny};
+  return inner;
 }

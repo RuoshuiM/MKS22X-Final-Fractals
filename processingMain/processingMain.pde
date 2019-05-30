@@ -9,7 +9,7 @@ import java.util.LinkedList;
 Sierpinski gasket;
 
 float zoomLevel;
-float zoomFactor = 1.5;
+float zoomFactor = 2;
 
 void setup() {
   size(1000, 500);
@@ -23,12 +23,12 @@ void setup() {
 
 void draw() { 
   background(50);  
-  fill(255); //<>//
+  fill(255); //<>// //<>//
   //text("Click the mouse to increase levels, press a key to decrease levles", 20, 20);
 
   
   //gasket.display(0, height - 10, width, height - 10, width / 2, 10);
-  gasket.display(); //<>//
+  gasket.display(); //<>// //<>//
   //testRotation();
   
   
