@@ -1,5 +1,7 @@
 int Sierpinski_level = 8;
-float VISIBLE_LEN = 3.5;
+float VISIBLE_LEN = 3;
+float LN_WEIGHT = 0.0000000001;
+Sierpinski Sierpinski_PARENT = makeSierpinski(width, height, 0);
 
 color Sierpinski_fg = color(255, 255, 255);
 color Sierpinski_bg = color(255, 0, 0);

@@ -1,15 +1,9 @@
 /**
- * Create Sierpiski's Gasket (google an image of this) The outer triangle are
- * the vertices: (v1x, v1y), (v2x,v2y), (v3x, v3y) levels: 0 = regular triangle
- * 1 = triforce (looks like 3 triangles) 2 = each of the 3 triangles will be cut
- * into 3 triangles. etc.
- */
-/**
  * Represents a gasket.
  * Coordinates are ordered: top, bottom-right, bottom-left
  *
  */
-public class Sierpinski {
+public class SierpinskiIn {
 
   /** how many levels of sub-gaskets should this one make */
   int level;
@@ -39,7 +33,7 @@ public class Sierpinski {
    - vertices
    */
 
-  public Sierpinski(int level, float x1, float y1, float x2, float y2, float x3, float y3) {
+  public SierpinskiIn(int level, float x1, float y1, float x2, float y2, float x3, float y3) {
     this.level = level;
 
     vx = new float[] {x1, x2, x3};
@@ -63,11 +57,6 @@ public class Sierpinski {
         inner[0] = makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
         inner[1] = makeSierpinski(next, m12x, m12y, x2, y2, m23x, m23y);
         inner[2] = makeSierpinski(next, m13x, m13y, m23x, m23y, x3, y3);
-
-
-        //inner[0].setParent(this);
-        //inner[1].setParent(this);
-        //inner[2].setParent(this);
       }
     }
   }
@@ -76,10 +65,10 @@ public class Sierpinski {
   public void display() {
     fill(Sierpinski_bg);
     strokeWeight(LN_WEIGHT);
-    
+
     // attempt at optimization: draw one big triangle background, then only lines inside
     triangle(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
-    
+
     innerDisplay();
   }
 
@@ -138,24 +127,14 @@ public class Sierpinski {
     line(vx[0], vy[0], vx[1], vy[1]);
     line(vx[1], vy[1], vx[2], vy[2]);
     line(vx[0], vy[0], vx[2], vy[2]);
-    
+
     if (inner != null) {
       for (Sierpinski i : inner) {
         i.innerDisplay();
       }
     }
   }
-
-  //public void draw(float v1x, float v1y, float v2x, float v2y, float v3x, float v3y) {
-  //  gasket(10, v1x, v1y, v2x, v2y, v3x, v3y);
-  //}
-
-
-
-
-
-
-
+  
   public void zoomIn(float x, float y, float factor) {
     // set up zoom
 
@@ -164,7 +143,7 @@ public class Sierpinski {
     // do any necesssary clean up
   }
 
-  private void innerZoomIn(float x, float y, float factor) { //<>//
+  private void innerZoomIn(float x, float y, float factor) {
     //System.out.format("Zooming in at (%f, %f) with factor %f%n", x, y, factor);
     for (int i = 0; i < vx.length; i++) {
       vx[i] = (vx[i] - x) * factor + x;
@@ -176,10 +155,18 @@ public class Sierpinski {
         s.zoomIn(x, y, factor);
       }
     } else {
-
+      
+      float len = abs(vx[2] - vx[1]);
+      
+      // if gasket is larger than screen size, check if it includes all of the screen
+      if (len > width) {
+        // Compute: if the sketch is contained in this gasket. If it is, set this gasket as the parent gasket
+        // http://blackpawn.com/texts/pointinpoly/default.html
+      }
+      
       // no inner gaskets; create some if necessary
-      if ((abs(vx[2] - vx[1]) > VISIBLE_LEN) &&
-        ((vx[0] <= width && vy[0] <= height) ||
+      if ((len > VISIBLE_LEN) && // if large enought
+        ((vx[0] <= width && vy[0] <= height) ||  // if all coors are inside view
         (vx[1] <= width && vy[1] <= height) ||
         (vx[2] <= width && vy[2] <= height))) {
         inner = makeChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
@@ -188,19 +175,6 @@ public class Sierpinski {
   }
 
   public void zoomOut(float x, float y, float factor) {
-    //System.out.format("Zooming out at (%f, %f) with factor %f%n", x, y, factor);
-    for (int i = 0; i < vx.length; i++) {
-      vx[i] = (vx[i] - x) / factor + x;
-      vy[i] = (vy[i] - y) / factor + y;
-    }
-
-    if (inner != null) {
-      for (Sierpinski s : inner) {
-        s.zoomOut(x, y, factor);
-      }
-      if (abs(vx[2] - vx[1]) < VISIBLE_LEN) {
-        inner = null;
-      }
-    }
+    throw new UnsupportedOperationException("Zoom out is not supported");
   }
 }

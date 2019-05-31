@@ -9,7 +9,7 @@ import java.util.LinkedList;
 Sierpinski gasket;
 
 float zoomLevel;
-float zoomFactor = 1.2;
+float zoomFactor = 5;
 
 void setup() {
   size(1000, 500);
@@ -17,7 +17,7 @@ void setup() {
   //gasket = makeSierpinski(width, height, 9);
   surface.setResizable(true);
 
-  gasket = makeSierpinski(width, height, 0);
+  gasket = Sierpinski_PARENT;
   //noLoop();
 }
 
