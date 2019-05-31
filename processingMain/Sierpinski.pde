@@ -54,7 +54,7 @@ public class Sierpinski {
       float m23y = ave(y2, y3);
 
 
-      triangle(m12x, m12y, m13x, m13y, m23x, m23y);
+      //triangle(m12x, m12y, m13x, m13y, m23x, m23y);
 
       int next = level + 1;
       //if (next < Sierpinski_level) {
@@ -76,6 +76,10 @@ public class Sierpinski {
   public void display() {
     fill(Sierpinski_bg);
     strokeWeight(0.000001);
+    
+    // attempt at optimization: draw one big triangle background, then only lines inside
+    triangle(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+    
     innerDisplay();
   }
 
@@ -130,7 +134,11 @@ public class Sierpinski {
    * Display this gasket and all sub-gaskets without checking bounds
    */
   private void innerDisplay() { 
-    triangle(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+    //triangle(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+    line(vx[0], vy[0], vx[1], vy[1]);
+    line(vx[1], vy[1], vx[2], vy[2]);
+    line(vx[0], vy[0], vx[2], vy[2]);
+    
     if (inner != null) {
       for (Sierpinski i : inner) {
         i.innerDisplay();

@@ -9,7 +9,7 @@ import java.util.LinkedList;
 Sierpinski gasket;
 
 float zoomLevel;
-float zoomFactor = 1.5;
+float zoomFactor = 1.2;
 
 void setup() {
   size(1000, 500);
