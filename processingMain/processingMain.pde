@@ -2,14 +2,14 @@ import java.util.List;
 import java.util.LinkedList;
 
 /* TODO:
- *  - implement conditions for adding details
+ *  DONE - implement conditions for adding details
  *  - fix error in display, when all coors are outside view but on different sides
  */
 
 Sierpinski gasket;
 
 float zoomLevel;
-float zoomFactor = 2;
+float zoomFactor = 1.5;
 
 void setup() {
   size(1000, 500);
@@ -23,12 +23,12 @@ void setup() {
 
 void draw() { 
   background(50);  
-  fill(255); //<>// //<>//
+  fill(255); //<>//
   //text("Click the mouse to increase levels, press a key to decrease levles", 20, 20);
 
   
   //gasket.display(0, height - 10, width, height - 10, width / 2, 10);
-  gasket.display(); //<>// //<>//
+  gasket.display(); //<>//
   //testRotation();
   
   
@@ -41,7 +41,7 @@ void subKock() {
   // https://stackoverflow.com/a/15368026
 }
 
-public void mouseClicked() {
+public void mouseClicked() { //<>//
   if (mouseButton == LEFT) {
     gasket.zoomIn(mouseX, mouseY, zoomFactor);
   } else if (mouseButton == RIGHT) {

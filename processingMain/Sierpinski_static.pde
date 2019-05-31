@@ -1,36 +1,8 @@
 int Sierpinski_level = 8;
+float VISIBLE_LEN = 3.5;
 
 color Sierpinski_fg = color(255, 255, 255);
 color Sierpinski_bg = color(255, 0, 0);
-
-/**
- * Track status of zooming of the gasket
- */
-static class SierpinskiZoom {
-  /** class is non-instantiable */
-  private SierpinskiZoom() {
-  }
-
-  /** Tracks whether recalculate should level make detail */
-  boolean computed = false;
-
-  int curLevel = 0;
-  boolean shouldLevelMakeDetail = false;
-
-  boolean hasZoomedIn = false;
-
-  /**
-   * Used when zooming in
-   * @return Whether fractal on this level should make more details
-   */
-  boolean shouldMakeDetail(Sierpinski s, int level) {
-    return false;
-  }
-
-  boolean shouldReduceDetail(Sierpinski s, int level) {
-    return false;
-  }
-}
 
 /** Wrapper for Sierpinski class so that constructor doesn't directly call itself */
 Sierpinski makeSierpinski(int levels, float x1, float y1, float x2, float y2, float x3, float y3) {
@@ -66,7 +38,7 @@ Sierpinski makeSierpinski(int maxWidth, int maxHeight, int level) {
  */
 Sierpinski[] makeChildren(int level, float x1, float y1, float x2, float y2, float x3, float y3) {
   Sierpinski[] inner = new Sierpinski[3];
-  
+
   float m12x = ave(x1, x2);
   float m12y = ave(y1, y2);
   float m13x = ave(x1, x3);
@@ -76,8 +48,8 @@ Sierpinski[] makeChildren(int level, float x1, float y1, float x2, float y2, flo
 
   int next = level + 1;
   inner[0] = makeSierpinski(next, x1, y1, m12x, m12y, m13x, m13y);
-  inner[1] = makeSierpinski(next, x2, y2, m12x, m12y, m23x, m23y);
-  inner[2] = makeSierpinski(next, x3, y3, m13x, m13y, m23x, m23y);
-  
+  inner[1] = makeSierpinski(next, m12x, m12y, x2, y2, m23x, m23y);
+  inner[2] = makeSierpinski(next, m13x, m13y, m23x, m23y, x3, y3);
+
   return inner;
 }
