@@ -6,7 +6,8 @@ import java.util.LinkedList;
  *  - fix error in display, when all coors are outside view but on different sides
  */
 
-Sierpinski gasket;
+Sierpinski f;
+Fractal.Types choice = Fractal.Types.SIERPINSKI;
 
 float zoomLevel;
 float zoomFactor = 5;
@@ -16,8 +17,17 @@ void setup() {
 
   //gasket = makeSierpinski(width, height, 9);
   surface.setResizable(true);
-
-  gasket = Sierpinski_PARENT;
+  
+  switch (choice) {
+    case SIERPINSKI:
+      f = makeSierpinski(width, height, 0);
+    break;
+    case SIERPINSKI_IN:
+      //f = makeSierpinskiIn(width, height, 0);
+    break;
+  }
+  
+  f = makeSierpinski(width, height, 0);
   //noLoop();
 }
 
@@ -28,7 +38,7 @@ void draw() {
 
   
   //gasket.display(0, height - 10, width, height - 10, width / 2, 10);
-  gasket.display(); //<>//
+  f.display(); //<>//
   //testRotation();
   
   
@@ -43,9 +53,9 @@ void subKock() {
 
 public void mouseClicked() { //<>//
   if (mouseButton == LEFT) {
-    gasket.zoomIn(mouseX, mouseY, zoomFactor);
+    f.zoomIn(mouseX, mouseY, zoomFactor);
   } else if (mouseButton == RIGHT) {
-    gasket.zoomOut(mouseX, mouseY, zoomFactor);
+    f.zoomOut(mouseX, mouseY, zoomFactor);
   }
 }
 

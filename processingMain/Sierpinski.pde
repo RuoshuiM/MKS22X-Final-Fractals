@@ -9,18 +9,10 @@
  * Coordinates are ordered: top, bottom-right, bottom-left
  *
  */
-public class Sierpinski {
+public class Sierpinski implements Fractal {
 
   /** how many levels of sub-gaskets should this one make */
   int level;
-
-  // Following code moved to static
-  ///** color of triangle and background */
-  //int bg, fg;
-  //{
-  //  bg = color(255, 255, 255);
-  //  fg = color(255, 0, 0);
-  //}
 
   //Sierpinski parent;
 
@@ -44,7 +36,7 @@ public class Sierpinski {
 
     vx = new float[] {x1, x2, x3};
     vy = new float[] {y1, y2, y3};
-    if (level < Sierpinski_level) {
+    //if (level < Sierpinski_level) {
 
       float m12x = ave(x1, x2);
       float m12y = ave(y1, y2);
@@ -69,7 +61,7 @@ public class Sierpinski {
         //inner[1].setParent(this);
         //inner[2].setParent(this);
       }
-    }
+    //}
   }
 
   /** Set up necessary settings for displaying */
@@ -182,7 +174,7 @@ public class Sierpinski {
         ((vx[0] <= width && vy[0] <= height) ||
         (vx[1] <= width && vy[1] <= height) ||
         (vx[2] <= width && vy[2] <= height))) {
-        inner = makeChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+        inner = makeSierpinskiChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
       }
     }
   }
