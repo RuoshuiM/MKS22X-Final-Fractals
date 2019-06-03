@@ -24,11 +24,10 @@ void setup() {
       f = makeSierpinski(width, height, 0);
     break;
     case SIERPINSKI_IN:
-      //f = makeSierpinskiIn(width, height, 0);
+      f = makeSierpinskiIn(width, height);
     break;
   }
   
-  f = makeSierpinski(width, height, 0);
   //noLoop();
 }
 
@@ -39,7 +38,7 @@ void draw() {
 
   
   //gasket.display(0, height - 10, width, height - 10, width / 2, 10);
-  f.display(); //<>//
+  f.display();
   //testRotation();
   
   
@@ -59,8 +58,3 @@ public void mouseClicked() { //<>//
     f.zoomOut(mouseX, mouseY, zoomFactor);
   }
 }
-
-//public void keyPressed() {
-//  gasket.minusLevel();
-//  redraw();
-//}

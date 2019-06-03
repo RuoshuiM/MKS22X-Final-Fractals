@@ -3,7 +3,7 @@
  * Coordinates are ordered: top, bottom-right, bottom-left
  *
  */
-public class SierpinskiIn implements Iterable, Fractal {
+public class SierpinskiIn implements Fractal {
 
   /** how many levels of sub-gaskets should this one make */
   int level;
@@ -37,7 +37,7 @@ public class SierpinskiIn implements Iterable, Fractal {
 
     //int next = level + 1;
 
-    if (abs(vx[2] - vx[1]) > VISIBLE_LEN) {
+    if (abs(vx[2] - vx[1]) > GASKET_MIN_SIZE) {
       //inner = new SierpinskiIn[3];
       //inner[0] = makeSierpinskiIn(next, x1, y1, m12x, m12y, m13x, m13y);
       //inner[1] = makeSierpinskiIn(next, m12x, m12y, x2, y2, m23x, m23y);
@@ -74,40 +74,49 @@ public class SierpinskiIn implements Iterable, Fractal {
     line(vx[0], vy[0], vx[2], vy[2]);
 
     // TODO: use iterator
-    if (inner != null) {
-      for (SierpinskiIn i : inner) {
-        i.innerDisplay();
-      }
-    }
+    //if (inner != null) {
+    //  for (SierpinskiIn i : inner) {
+    //    i.innerDisplay();
+    //  }
+    //}
+
+    boolean c0b = c0 != null;
+    boolean c1b = c1 != null;
+    boolean c2b = c2 != null;
+
+    if (c0b) c0.innerDisplay();
+    if (c1b) c1.innerDisplay();
+    if (c2b) c2.innerDisplay();
+
+    // if any gasket doesn't contain an inner one, draw instead of display
+    //if (!(c0b || c1b || c2b)) {
+    //  drawInnerGasket(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+    //}
   }
 
   public void zoomIn(float x, float y, float factor) {
-    // set up zoom
-
-    innerZoomIn(x, y, factor);
-
-    // do any necesssary clean up
-  }
-
-  private void innerZoomIn(float x, float y, float factor) {
     //System.out.format("Zooming in at (%f, %f) with factor %f%n", x, y, factor);
     for (int i = 0; i < vx.length; i++) {
       vx[i] = (vx[i] - x) * factor + x;
       vy[i] = (vy[i] - y) * factor + y;
     }
-    if (inner != null) {
-      for (SierpinskiIn s : inner) {
-        if (s != null) { 
-          s.zoomIn(x, y, factor);
-        }
-      }
-    } else {
 
-      float len = abs(vx[2] - vx[1]);
+    boolean c0b = c0 != null;
+    boolean c1b = c1 != null;
+    boolean c2b = c2 != null;
 
-      boolean inside0 = vx[0] <= width && vy[0] <= height;
-      boolean inside1 = vx[1] <= width && vy[1] <= height;
-      boolean inside2 = vx[2] <= width && vy[2] <= height;
+    if (c0b) c0.zoomIn(x, y, factor);
+    if (c1b) c1.zoomIn(x, y, factor);
+    if (c2b) c2.zoomIn(x, y, factor);
+
+    boolean inside0 = vx[0] <= width && vy[0] <= height;
+    boolean inside1 = vx[1] <= width && vy[1] <= height;
+    boolean inside2 = vx[2] <= width && vy[2] <= height;
+
+    float len = abs(vx[2] - vx[1]);
+
+    // if this gasket has children, then it's not at the lowest level
+    if (c0b && c1b & c2b) {
 
       // if gasket is larger than screen size, and all of the coors are outside check if it includes all of the screen
       if (len > width && !(inside0 || inside1 || inside2)) {
@@ -121,26 +130,48 @@ public class SierpinskiIn implements Iterable, Fractal {
         if (triangle.containsPt(width, height)) numIn++;
 
         // If gasket contains three corners of the canvas, then set this gasket to be the parent
-        if (numIn > 2) {
+        if (numIn > 3) {
           f = this;
 
+          println("parent resetted");
           // if gasket is completely outside of canvas, remove it from parent
         } else if (numIn == 0) {
           parent.removeChild(this);
+          println("child removed!");
         }
       }
-
-      // no inner gaskets; create some if necessary
-      if ((len > VISIBLE_LEN) && // if large enough
-        (inside0 || inside1 || inside2)) { // if any coors are inside
-        //inner = makeSierpinskiInChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
-        SierpinskiIn[] result = makeSierpinskiInChildren(this, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
-
-        c0 = result[0];
-        c1 = result[1];
-        c2 = result[2];
-      }
     }
+    // no inner gaskets; create some if necessary
+    else if ((len > GASKET_MIN_SIZE) && // if large enough
+      (inside0 || inside1 || inside2)) { // if any coors are inside
+      //inner = makeSierpinskiInChildren(level, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+      SierpinskiIn[] result = makeSierpinskiInChildren(this, vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+
+      c0 = result[0];
+      c1 = result[1];
+      c2 = result[2];
+    }
+  }
+
+  void drawInnerGasket(float x1, float y1, float x2, float y2, float x3, float y3) {
+    line(x1, y1, x2, y2);
+    line(x1, y1, x3, y3);
+    line(x2, y2, x3, y3);
+
+    float m12x = ave(x1, x2);
+    float m13x = ave(x1, x3);
+    
+    if (abs(m12x - m13x) < VISIBLE_LEN) return;
+    
+    float m12y = ave(y1, y2);
+    float m13y = ave(y1, y3);
+    float m23x = ave(x2, x3);
+    float m23y = ave(y2, y3);
+    
+
+    drawInnerGasket(x1, y1, m12x, m12y, m13x, m13y);
+    drawInnerGasket(m12x, m12y, x2, y2, m23x, m23y);
+    drawInnerGasket(m13x, m13y, m23x, m23y, x3, y3);
   }
 
   public void zoomOut(float x, float y, float factor) {
@@ -148,19 +179,20 @@ public class SierpinskiIn implements Iterable, Fractal {
   }
 
   void removeChild(SierpinskiIn child) {
-    
+    if (c0 == child) c0 = null;
+    else if (c1 == child) c1 = null;
+    else if (c2 == child) c2 = null;
   }
 
+  /////////////////DEBUG
+  /*
   @Override
-  public Iterator iterator() {
-    
-  }
-
-    @Override
-    // finalize method is called on object once  
-    // before garbage collecting it 
-    protected void finalize() throws Throwable 
-  { 
-    System.out.println("Object garbage collected : " + this);
-  }
+   // finalize method is called on object once  
+   // before garbage collecting it 
+   protected void finalize() throws Throwable 
+   { 
+   System.out.println("Object garbage collected : " + this);
+   }
+   
+   */
 }
