@@ -86,16 +86,16 @@ public class Sierpinski implements Fractal {
 
 
       // no need to use abs since all coors are positive
-      boolean inside1 = vx[0] <= width && vy[0] <= height;
-      boolean inside2 = vx[1] <= width && vy[1] <= height;
-      boolean inside3 = vx[2] <= width && vy[2] <= height;
+      boolean inside0 = vx[0] <= width && vy[0] <= height;
+      boolean inside1 = vx[1] <= width && vy[1] <= height;
+      boolean inside2 = vx[2] <= width && vy[2] <= height;
 
-      if (inside1 && inside2 && inside3) {
+      if (inside0 && inside1 && inside2) {
         // all vertices are inside view, then all sub-gaskets should be drawn
         for (Sierpinski i : inner) {
           i.innerDisplay();
         }
-      } else if (inside1 || inside2 || inside3) {
+      } else if (inside0 || inside1 || inside2) {
         // some vertices are inside view, let sub-gaskets determine for themselves
         for (Sierpinski i : inner) {
           i.condDisplay();

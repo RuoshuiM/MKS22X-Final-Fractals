@@ -1,16 +1,17 @@
 import java.util.List;
 import java.util.LinkedList;
+import java.util.Iterator;
 
 /* TODO:
  *  DONE - implement conditions for adding details
  *  - fix error in display, when all coors are outside view but on different sides
  */
 
-Sierpinski f;
-Fractal.Types choice = Fractal.Types.SIERPINSKI;
+Fractal f;
+Fractal.Types choice = Fractal.Types.SIERPINSKI_IN;
 
 float zoomLevel;
-float zoomFactor = 5;
+float zoomFactor = 1.5;
 
 void setup() {
   size(1000, 500);
