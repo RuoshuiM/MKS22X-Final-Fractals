@@ -88,10 +88,10 @@ public class SierpinskiIn implements Fractal {
     if (c1b) c1.innerDisplay();
     if (c2b) c2.innerDisplay();
 
-    // if any gasket doesn't contain an inner one, draw instead of display
-    //if (!(c0b || c1b || c2b)) {
-    //  drawInnerGasket(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
-    //}
+    // if gasket doesn't contain inner ones, draw instead of display
+    if (!(c0b || c1b || c2b)) {
+      drawInnerGasket(vx[0], vy[0], vx[1], vy[1], vx[2], vy[2]);
+    }
   }
 
   public void zoomIn(float x, float y, float factor) {
@@ -175,7 +175,7 @@ public class SierpinskiIn implements Fractal {
   }
 
   public void zoomOut(float x, float y, float factor) {
-    throw new UnsupportedOperationException("Zoom out is not supported");
+    println("This fractal doesn't support zooming out");
   }
 
   void removeChild(SierpinskiIn child) {

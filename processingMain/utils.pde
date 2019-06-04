@@ -66,3 +66,17 @@ class PtInTriangle {
     return (u >= 0) && (v >= 0) && (u + v < 1);
   }
 }
+
+//class Msg {
+//  String msg;
+//  boolean toDisplay = false;
+//  int startTime;
+//  float duration;
+//  float posX, posY;
+  
+//  void draw() {
+//    if (toDisplay) {
+//      text(msg, posX, posY);
+//    }
+//  }
+//}

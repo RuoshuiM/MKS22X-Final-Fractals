@@ -46,15 +46,22 @@ void draw() {
   //other fractal you can do! This requires a bit more math, or you can look up the coordinates.
 }
 
-void subKock() {
-  // coordinates
-  // https://stackoverflow.com/a/15368026
-}
-
 public void mouseClicked() { //<>//
   if (mouseButton == LEFT) {
     f.zoomIn(mouseX, mouseY, zoomFactor);
   } else if (mouseButton == RIGHT) {
     f.zoomOut(mouseX, mouseY, zoomFactor);
+  }
+}
+
+public void keyPressed() {
+  if (key == 'r' || key == 'R') {
+    setup();
+  } else if (key == 'o' || key == 'O') {
+    choice = Fractal.Types.SIERPINSKI;
+    setup();
+  } else if (key == 'i' || key == 'I') {
+    choice = Fractal.Types.SIERPINSKI_IN;
+    setup();
   }
 }
