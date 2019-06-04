@@ -8,7 +8,7 @@ import java.util.Iterator;
  */
 
 Fractal f;
-Fractal.Types choice = Fractal.Types.SIERPINSKI_IN;
+Fractal.Types choice = Fractal.Types.SIERPINSKI;
 
 float zoomLevel;
 float zoomFactor = 1.5;
