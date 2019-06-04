@@ -36,3 +36,14 @@
 ### Problems still present:
 - Inefficient displaying (calculation determining which gasket to draw is perhaps too costy)
 - When zooming in, wierd effect is displayed - has to do with factor and VISIBLE_LEN variable
+
+## 20190531 - 20190603
+- Adds the Fractal interface
+- Adds SierpinskiIn class, which only allows for zoom in
+- Sierpinski and SierpinskiIn both implement Fractal
+- Tries to optimize and throws away unecessary data in SierpinskiIn class
+  - Use Barycentric coordinates to detect if view is in a gasket
+- Adds support for selecting options based on keyboard
+- Default mode: zoom in and out
+
+Problem: SierpinskiIn is __Still Slow!__
